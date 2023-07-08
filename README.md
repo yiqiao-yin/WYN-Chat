@@ -2,6 +2,8 @@
 
 This application is a simple ChatGPT-like clone built with OpenAI's GPT-4 model and Streamlit.
 
+Link: [here](https://wyn-chat.streamlit.app/)
+
 ## 📚 Dependencies
 
 To run this application, you need to have the following libraries installed:
