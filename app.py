@@ -1,10 +1,9 @@
 import openai
 import streamlit as st
+
 from my_openai import *
 
-# Title
 st.title("ChatGPT-like clone")
-
 
 # Set the OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -24,6 +23,7 @@ for message in st.session_state.messages:
 
 # Get user input from chat_input and store it in the prompt variable using the walrus operator ":="
 if prompt := st.chat_input("What is up?"):
+
     # Add user message to session state messages
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
