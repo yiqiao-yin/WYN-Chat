@@ -3,7 +3,7 @@ import streamlit as st
 
 from my_openai import *
 
-st.title("ChatGPT-like clone")
+st.title("ChatGPT-like Clone (GPT 4) 💭")
 
 
 # Set the OpenAI API key from Streamlit secrets
