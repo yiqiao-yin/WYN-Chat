@@ -22,6 +22,18 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+# Initialize an empty list to store the dictionaries
+result = []
+
+# Create a dictionary with the current question and answer
+assistant_prompt = {
+    "role": "assistant",
+    "content": "You are a helpful AI assistant for the user.",
+}
+
+# Add the dictionary to the result list
+result.append(assistant_prompt)
+
 # Get user input from chat_input and store it in the prompt variable using the walrus operator ":="
 if prompt := st.chat_input("What is up?"):
     # Add user message to session state messages
@@ -30,22 +42,22 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
 
     # API Call
-    # Initialize an empty list to store the dictionaries
-    result = []
-
-    # Create a dictionary with the current question and answer
-    qa_dict_ans = {
-        "role": "assistant",
-        "content": "You are a helpful AI assistant for the user.",
-    }
-    qa_dict_quest = {"role": "user", "content": prompt}
+    user_prompt = {"role": "user", "content": prompt}
 
     # Add the dictionary to the result list
-    result.append(qa_dict_quest)
-    result.append(qa_dict_ans)
+    result.append(assistant_prompt)
 
     # API Call: GPT4
     response = call_chatcompletion(result)
+
+    # Update assistance_prompt
+    assistant_prompt = {
+        "role": "assistant",
+        "content": response,
+    }
+
+    # Add the dictionary to the result list
+    result.append(assistant_prompt)
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
