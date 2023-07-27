@@ -45,7 +45,7 @@ if prompt := st.chat_input("What is up?"):
     user_prompt = {"role": "user", "content": prompt}
 
     # Add the dictionary to the result list
-    result.append(assistant_prompt)
+    result.append(user_prompt)
 
     # API Call: GPT4
     response = call_chatcompletion(result)
