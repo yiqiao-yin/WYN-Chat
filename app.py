@@ -1,5 +1,6 @@
 import openai
 import streamlit as st
+from my_openai import *
 
 st.title("ChatGPT-like clone")
 
@@ -21,34 +22,18 @@ for message in st.session_state.messages:
 
 # Get user input from chat_input and store it in the prompt variable using the walrus operator ":="
 if prompt := st.chat_input("What is up?"):
+
     # Add user message to session state messages
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    # API Call
+    response = call_chatcompletion(prompt)
+
+    # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        # Create an empty placeholder to hold the assistant's response
-        message_placeholder = st.empty()
-        full_response = ""
+        st.markdown(response)
 
-        # Iterate over the responses received from OpenAI ChatCompletion API
-        for response in openai.ChatCompletion.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-
-            # Append the assistant's response to the full_response string
-            full_response += response.choices[0].delta.get("content", "")
-
-            # Update the message_placeholder with the current full_response
-            message_placeholder.markdown(full_response + "▌")
-
-        # Update the message_placeholder with the final full_response
-        message_placeholder.markdown(full_response)
-
-    # Add assistant message to session state messages
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
