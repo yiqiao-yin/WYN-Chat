@@ -5,6 +5,7 @@ from my_openai import *
 
 st.title("ChatGPT-like clone")
 
+
 # Set the OpenAI API key from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -23,14 +24,28 @@ for message in st.session_state.messages:
 
 # Get user input from chat_input and store it in the prompt variable using the walrus operator ":="
 if prompt := st.chat_input("What is up?"):
-
     # Add user message to session state messages
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
 
     # API Call
-    response = call_chatcompletion(prompt)
+    # Initialize an empty list to store the dictionaries
+    result = []
+
+    # Create a dictionary with the current question and answer
+    qa_dict_ans = {
+        "role": "assistant",
+        "content": "You are a helpful AI assistant for the user.",
+    }
+    qa_dict_quest = {"role": "user", "content": prompt}
+
+    # Add the dictionary to the result list
+    result.append(qa_dict_quest)
+    result.append(qa_dict_ans)
+
+    # API Call: GPT4
+    response = call_chatcompletion(result)
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
