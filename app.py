@@ -50,15 +50,6 @@ if prompt := st.chat_input("What is up?"):
     # API Call: GPT4
     response = call_chatcompletion(result)
 
-    # Update assistance_prompt
-    assistant_prompt = {
-        "role": "assistant",
-        "content": response,
-    }
-
-    # Add the dictionary to the result list
-    result.append(assistant_prompt)
-
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
