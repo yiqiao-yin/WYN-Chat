@@ -52,7 +52,8 @@ if prompt := st.chat_input("What is up?"):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        st.markdown(response)
+        with st.spinner('Wait for it...'):
+            st.markdown(response)
 
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
