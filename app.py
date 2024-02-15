@@ -42,17 +42,17 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
 
     # API Call
-    user_prompt = {"role": "user", "content": prompt}
-
-    # Add the dictionary to the result list
-    result.append(user_prompt)
-
-    # API Call: GPT4
-    response = call_chatcompletion(result)
-
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        with st.spinner('Wait for it...'):
+    with st.spinner('Wait for it...'):
+        user_prompt = {"role": "user", "content": prompt}
+    
+        # Add the dictionary to the result list
+        result.append(user_prompt)
+    
+        # API Call: GPT4
+        response = call_chatcompletion(result)
+    
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
             st.markdown(response)
 
     # Add assistant response to chat history
